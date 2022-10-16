@@ -1,2 +1,2 @@
 # Java_learning
-Made for me and my teacher
+Made for me, beautiful Java code and awful teacher :<
