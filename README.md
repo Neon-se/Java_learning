@@ -31,11 +31,18 @@ Human {
 структуру и определяющая алгоритм для работы с ними.
 
 ```java
-class Human {
-    int age;
-    String name;
-    int height;
-    int weight;
+public class Human {
+    int modelAge;
+    String modelName;
+    int modelHeight;
+    int modelWeight;
+    
+    public Human(int age, String name, int height, int weight) {
+        modelAge = age;
+        modelNamee = name;
+        modelHeight = height;
+        modelWeight = weight;
+    }
 }
 
 let human1 = new Human(12, 'Ван', 146, 38);
