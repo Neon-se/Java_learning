@@ -1,42 +1,46 @@
 import java.util.Scanner;
 
 public class App {
+    private static final String[] wordList = new String[] {"собака", "энцефалит", "здание", "апостроф", "траспорт", "автобус", "штаб-квартира"};
+    private static final String word = wordList[(int)Math.floor(Math.random()*wordList.length)];
     public static void main(String[] args ) {
-        /*
-            1. Если <18 - янг
-            2. Если >17 || <65 - эдулть
-            3. Если >64 -> пенсионьер
-         */
+        Scanner in = new Scanner(System.in);
+        int marks = 0;
+        int len = word.length();
+        System.out.printf("Привет! Ты должен отгадать слово, в нём %d букв...\n", len);
 
-        var in = new Scanner(System.in);
+        StringBuilder strBuild = new StringBuilder();
 
-        System.out.print("\u001B[33mСколько вам лет?\nМне: ");
-        int age = in.nextInt();
-        String pers;
-
-        if (age < 17) {
-            pers = "янг";
-        } else if (age > 65) {
-            pers = "пенсионьер";
-        } else {
-            pers = "эдулть";
+        for (int i = 0; i < len; i++) {
+            if(Character.isLetter(word.charAt(i))) {
+                strBuild.append("_");
+            } else {
+                strBuild.append(word.charAt(i));
+            }
         }
-        System.out.println("Вы - \u001B[11m"+pers+"");
+        String wordMask = strBuild.toString();
 
+        System.out.println(wordMask);
 
-        System.out.print("\u001B[33mВведите первое число: ");
-        int a = in.nextInt();
-        System.out.print("\nВведите второе число: ");
-        int b = in.nextInt();
-
-        if (a > b) {
-            System.out.printf("\n%d больше %d\n", a, b);
-        } else if (a < b) {
-            System.out.printf("%d больше %d\n", b, a);
-        } else {
-            System.out.printf("%d равно %d\n", b, a);
-        }
-
-        in.close();
+        do {
+            System.out.print("Введите букву: ");
+            char c = in.next().charAt(0);
+            if(Character.isLetter(c)) {
+                if (wordMask.indexOf(c) >= 0) {
+                    System.out.println("Ты уже ввёл " + c);
+                } else if (word.indexOf(c) >= 0) {
+                    for (int i = 1; i <= len; i++) {
+                        if (word.charAt(i - 1) == c) {
+                            wordMask = wordMask.substring(0, i - 1) + c + wordMask.substring(i, len);
+                        }
+                    }
+                    System.out.printf("Такая буква есть: %s\n", wordMask);
+                } else {
+                    System.out.println("Неправильная буква!");
+                    marks++;
+                }
+            }
+        } while (!wordMask.equals(word));
+        System.out.printf("Угадал! Ошибок: %d", marks);
     }
 }
